@@ -23,15 +23,20 @@ const App = () => {
         const mountsResponse = await fetch("http://localhost:5001/api/mounts");
         const mediaPlayersResponse = await fetch("http://localhost:5001/api/media-players");
         const receptaclesResponse = await fetch("http://localhost:5001/api/receptacle-boxes");
+    
+        const models = await screensResponse.json();
+        const mounts = await mountsResponse.json();
+        const mediaPlayers = await mediaPlayersResponse.json();
+        const receptacles = await receptaclesResponse.json();
 
-        setModels(await screensResponse.json());
-        setMounts(await mountsResponse.json());
-        setMediaPlayers(await mediaPlayersResponse.json());
-        setReceptacles(await receptaclesResponse.json());
+        setModels(models);
+        setMounts(mounts);
+        setMediaPlayers(mediaPlayers);
+        setReceptacles(receptacles);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
-    };
+    };    
 
     fetchData();
   }, []);
@@ -146,6 +151,17 @@ const App = () => {
                 >
                   {`${selectedDetails.Height} cm`}
                 </text>
+                {/* Small Double-Dashed Square (center-right of LED) */}
+                <rect
+                  x={500 + (selectedDetails.Width / 4) * 10 - 30}
+                  y={500 - 15}
+                  width="45"
+                  height="35" 
+                  fill="none"
+                  stroke="black"
+                  strokeWidth="1"
+                  strokeDasharray="2,2"
+                />
               </>
             )}
 

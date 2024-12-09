@@ -1,7 +1,9 @@
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Roboto', sans-serif;
   margin: 0;
   padding: 0;
+  background-color: #1e1e2f;
+  color: #e0e0e0;
 }
 
 #root {
@@ -12,4 +14,38 @@ body {
 
 div {
   box-sizing: border-box;
+}
+
+button {
+  background-color: #3b3b4f;
+  color: #e0e0e0;
+  border: none;
+  padding: 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #4c4c63;
+}
+
+input, select {
+  background-color: #2c2c3c;
+  color: #e0e0e0;
+  border: 1px solid #444455;
+  padding: 8px;
+  border-radius: 4px;
+}
+
+input::placeholder {
+  color: #7f7f8c;
+}
+
+label {
+  color: #b0b0c8;
+}
+
+h2 {
+  color: #ffffff;
+  margin-bottom: 1rem;
 }
