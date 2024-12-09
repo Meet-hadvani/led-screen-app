@@ -8,7 +8,7 @@ const RightPanel = ({
   onSelectionChange,
   description,
   onDescriptionChange,
-  onOrientationChange, // Added prop
+  onOrientationChange, 
   onDownload,
 }) => {
   return (

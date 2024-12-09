@@ -26,7 +26,7 @@ const loadSpreadsheet = async () => {
   // Convert data to JSON (remove empty rows and headers)
   for (const key in sheets) {
     sheets[key] = sheets[key]
-      .slice(2) // Skip the header row (adjust if your data has a different structure)
+      .slice(2)
       .map(row => {
         return row.reduce((obj, cell, index) => {
           const header = sheets[key][1]?.[index] || `Column${index}`;

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import RightPanel from "./components/RightPanel.js";
 import jsPDF from "jspdf";
-import svgToPdf from "svg-to-pdfkit";
 
 const App = () => {
   const [models, setModels] = useState([]);
@@ -9,7 +8,7 @@ const App = () => {
   const [mediaPlayers, setMediaPlayers] = useState([]);
   const [receptacles, setReceptacles] = useState([]);
   const [selectedDetails, setSelectedDetails] = useState(null);
-  const [orientation, setOrientation] = useState("horizontal"); // Track orientation
+  const [orientation, setOrientation] = useState("horizontal");
   const [description, setDescription] = useState({
     title: "",
     drawer: "",
@@ -56,16 +55,16 @@ const App = () => {
   };
 
   const handleDownload = () => {
-    const svgElement = document.querySelector("svg"); // Select the SVG element
-    const svgRect = svgElement.getBoundingClientRect(); // Get the bounding rectangle of the SVG
+    const svgElement = document.querySelector("svg"); 
+    const svgRect = svgElement.getBoundingClientRect(); 
   
     const pdf = new jsPDF({
       orientation: "landscape",
       unit: "pt",
-      format: [svgRect.width, svgRect.height], // Use bounding box dimensions
+      format: [svgRect.width, svgRect.height],
     });
   
-    const svgString = new XMLSerializer().serializeToString(svgElement); // Serialize SVG to a string
+    const svgString = new XMLSerializer().serializeToString(svgElement);
     const canvas = document.createElement("canvas");
     const context = canvas.getContext("2d");
   
@@ -245,7 +244,7 @@ const App = () => {
         onSelectionChange={handleSelectionChange}
         description={description}
         onDescriptionChange={handleDescriptionChange}
-        onOrientationChange={setOrientation} // Pass orientation handler
+        onOrientationChange={setOrientation}
         onDownload={handleDownload}
       />
     </div>
