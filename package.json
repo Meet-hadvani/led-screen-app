@@ -4,9 +4,11 @@
   "private": true,
   "dependencies": {
     "cra-template": "1.2.0",
+    "jspdf": "^2.5.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-scripts": "^3.0.1",
+    "svg-to-pdfkit": "^0.1.8",
     "web-vitals": "^4.2.4"
   },
   "scripts": {

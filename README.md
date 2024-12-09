@@ -1,70 +1,109 @@
-# Getting Started with Create React App
+# React SVG LED Display Configurator
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This repository contains a mini React application that allows users to configure and visualize LED screens, mounts, media players, and receptacle boxes. The app dynamically fetches data from APIs, renders SVG representations of the configurations, and allows users to download the visualization as a PDF.
 
-## Available Scripts
+## Features
+- **Dynamic Data Fetching:** Fetches LED models, mounts, media players, and receptacle boxes from backend APIs.
+- **Interactive SVG Visualizations:** Displays an SVG representation of the LED screen based on user selections.
+- **Orientation Control:** Switch between horizontal and vertical orientations for the LED screen.
+- **PDF Export:** Download the SVG visualization as a PDF file.
 
-In the project directory, you can run:
+## Project Structure
+```
+.
+├── src
+│   ├── App.js                  # Main component
+│   ├── components
+│   │   └── RightPanel.js       # Right-side configuration panel
+│   ├── index.js                # Entry point
+│   └── styles                  # (Optional) Add custom styles here
+├── public
+│   └── index.html              # HTML template
+└── package.json                # Project dependencies and scripts
+```
 
-### `npm start`
+## Getting Started
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Prerequisites
+- Node.js (v14 or above)
+- npm or yarn
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Installation
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-username/react-svg-led-configurator.git
+   cd react-svg-led-configurator
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
 
-### `npm test`
+### Running the Application
+1. Start the development server:
+   ```bash
+   npm start
+   # or
+   yarn start
+   ```
+2. Open your browser and navigate to `http://localhost:3000`.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Backend Setup
+Ensure the backend APIs are running at `http://localhost:5001` with the following endpoints:
+- `GET /api/screens`
+- `GET /api/mounts`
+- `GET /api/media-players`
+- `GET /api/receptacle-boxes`
 
-### `npm run build`
+You can adjust the API URLs in `App.js` if necessary.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Building for Production
+1. Build the application:
+   ```bash
+   npm run build
+   # or
+   yarn build
+   ```
+2. The optimized build will be available in the `build` directory.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## How to Use
+1. Select configurations for the screen, media player, mount, and receptacle box from the dropdown menus.
+2. Adjust properties like orientation (horizontal/vertical) and floor distance.
+3. Enter additional details like title, drawer, department, screen size, and date.
+4. Download the SVG visualization as a PDF by clicking the **Download PDF** button.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Known Issues
+- Switching between horizontal and vertical orientations may cause SVG dimensions to reset. Ensure correct user interaction to prevent unintended behavior.
+- Backend API endpoints must be correctly configured to avoid fetch errors.
 
-### `npm run eject`
+## Contributing
+Contributions are welcome! Please follow these steps:
+1. Fork the repository.
+2. Create a feature branch:
+   ```bash
+   git checkout -b feature-name
+   ```
+3. Commit your changes:
+   ```bash
+   git commit -m "Add feature description"
+   ```
+4. Push to your branch:
+   ```bash
+   git push origin feature-name
+   ```
+5. Open a pull request.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## License
+This project is licensed under the MIT License. See the `LICENSE` file for details.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Acknowledgments
+- **[React](https://reactjs.org/):** JavaScript library for building user interfaces.
+- **[jsPDF](https://github.com/parallax/jsPDF):** Library for generating PDF files.
+- **[svg-to-pdfkit](https://github.com/alafr/SVG-to-PDFKit):** Library for converting SVGs to PDFs.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+---
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Happy Coding! 🚀
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

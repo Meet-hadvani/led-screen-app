@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
+
 const RightPanel = ({
   models,
   mounts,
@@ -7,6 +8,8 @@ const RightPanel = ({
   onSelectionChange,
   description,
   onDescriptionChange,
+  onOrientationChange, // Added prop
+  onDownload,
 }) => {
   return (
     <div
@@ -73,8 +76,18 @@ const RightPanel = ({
           </select>
         </div>
         <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "1rem" }}>
-          <button style={{ flex: 1, marginRight: "0.5rem" }}>Vertical</button>
-          <button style={{ flex: 1 }}>Horizontal</button>
+          <button
+            onClick={() => onOrientationChange("vertical")}
+            style={{ flex: 1, marginRight: "0.5rem" }}
+          >
+            Vertical
+          </button>
+          <button
+            onClick={() => onOrientationChange("horizontal")}
+            style={{ flex: 1 }}
+          >
+            Horizontal
+          </button>
         </div>
         <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "1rem" }}>
           <button style={{ flex: 1, marginRight: "0.5rem" }}>Niche</button>
@@ -142,8 +155,9 @@ const RightPanel = ({
             style={{ width: "100%" }}
           />
         </div>
-        <button style={{ width: "100%", backgroundColor: "#0078D7", color: "white", borderRadius: "4px" }}>
-          Download
+        {/* Add Download Button */}
+        <button onClick={onDownload} style={{ marginTop: "2px", padding: "10px", cursor: "pointer" }}>
+          Download PDF
         </button>
       </div>
     </div>

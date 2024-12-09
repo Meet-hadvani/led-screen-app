@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import RightPanel from "./components/RightPanel.js";
+import jsPDF from "jspdf";
+import svgToPdf from "svg-to-pdfkit";
 
 const App = () => {
   const [models, setModels] = useState([]);
@@ -7,13 +9,14 @@ const App = () => {
   const [mediaPlayers, setMediaPlayers] = useState([]);
   const [receptacles, setReceptacles] = useState([]);
   const [selectedDetails, setSelectedDetails] = useState(null);
+  const [orientation, setOrientation] = useState("horizontal"); // Track orientation
   const [description, setDescription] = useState({
     title: "",
     drawer: "",
     department: "",
     screenSize: "",
     date: "",
-    floorDistance: 100, // Default floor distance
+    floorDistance: 100,
   });
 
   useEffect(() => {
@@ -23,7 +26,7 @@ const App = () => {
         const mountsResponse = await fetch("http://localhost:5001/api/mounts");
         const mediaPlayersResponse = await fetch("http://localhost:5001/api/media-players");
         const receptaclesResponse = await fetch("http://localhost:5001/api/receptacle-boxes");
-    
+
         const models = await screensResponse.json();
         const mounts = await mountsResponse.json();
         const mediaPlayers = await mediaPlayersResponse.json();
@@ -36,19 +39,13 @@ const App = () => {
       } catch (error) {
         console.error("Error fetching data:", error);
       }
-    };    
+    };
 
     fetchData();
   }, []);
 
   const handleSelectionChange = (type, selected) => {
-    if (type === "model" && selected) {
-      setSelectedDetails(selected.value);
-    } else if (selected) {
-      setSelectedDetails(selected.value);
-    } else {
-      setSelectedDetails(null);
-    }
+    setSelectedDetails(selected?.value || null);
   };
 
   const handleDescriptionChange = (field, value) => {
@@ -57,6 +54,37 @@ const App = () => {
       [field]: value,
     }));
   };
+
+  const handleDownload = () => {
+    const svgElement = document.querySelector("svg"); // Select the SVG element
+    const svgRect = svgElement.getBoundingClientRect(); // Get the bounding rectangle of the SVG
+  
+    const pdf = new jsPDF({
+      orientation: "landscape",
+      unit: "pt",
+      format: [svgRect.width, svgRect.height], // Use bounding box dimensions
+    });
+  
+    const svgString = new XMLSerializer().serializeToString(svgElement); // Serialize SVG to a string
+    const canvas = document.createElement("canvas");
+    const context = canvas.getContext("2d");
+  
+    canvas.width = svgRect.width;
+    canvas.height = svgRect.height;
+  
+    // Create an image from the serialized SVG
+    const img = new Image();
+    img.src = `data:image/svg+xml;base64,${btoa(svgString)}`;
+    img.onload = () => {
+      context.drawImage(img, 0, 0, canvas.width, canvas.height);
+  
+      // Convert canvas to an image and add to PDF
+      const imgData = canvas.toDataURL("image/png");
+      pdf.addImage(imgData, "PNG", 0, 0, svgRect.width, svgRect.height);
+      pdf.save("canvas.pdf");
+    };
+  };
+  
 
   return (
     <div style={{ display: "flex", height: "100vh" }}>
@@ -120,48 +148,70 @@ const App = () => {
 
             {/* Rectangle representing the LED screen */}
             {selectedDetails.Width && selectedDetails.Height && (
+              <rect
+                x={
+                  500 -
+                  (orientation === "horizontal"
+                    ? selectedDetails.Width / 2
+                    : selectedDetails.Height / 2) * 10
+                }
+                y={
+                  500 -
+                  (orientation === "horizontal"
+                    ? selectedDetails.Height / 2
+                    : selectedDetails.Width / 2) * 10
+                }
+                width={orientation === "horizontal" ? selectedDetails.Width * 10 : selectedDetails.Height * 10}
+                height={orientation === "horizontal" ? selectedDetails.Height * 10 : selectedDetails.Width * 10}
+                fill="white"
+                stroke="black"
+                strokeWidth="3"
+              />
+            )}
+
+            /* Width and height annotations for the LED screen */
+            {selectedDetails.Width && selectedDetails.Height && (
               <>
-                <rect
-                  x={500 - (selectedDetails.Width / 2) * 10}
-                  y={500 - (selectedDetails.Height / 2) * 10}
-                  width={selectedDetails.Width * 10}
-                  height={selectedDetails.Height * 10}
-                  fill="white"
-                  stroke="black"
-                  strokeWidth="3"
-                />
-                {/* Width text */}
+                {/* Width annotation */}
                 <text
                   x={500}
-                  y={500 - (selectedDetails.Height / 2) * 10 - 10}
+                  y={
+                    500 -
+                    (orientation === "horizontal"
+                      ? selectedDetails.Height / 2
+                      : selectedDetails.Width / 2) * 10 - 10
+                  }
                   textAnchor="middle"
                   fontSize="16"
                   fill="black"
                 >
-                  {`${selectedDetails.Width} cm`}
+                  {orientation === "horizontal"
+                    ? `${selectedDetails.Width} cm`
+                    : `${selectedDetails.Height} cm`}
                 </text>
-                {/* Height text */}
+                {/* Height annotation */}
                 <text
-                  x={500 - (selectedDetails.Width / 2) * 10 - 10}
+                  x={
+                    500 -
+                    (orientation === "horizontal"
+                      ? selectedDetails.Width / 2
+                      : selectedDetails.Height / 2) * 10 - 10
+                  }
                   y={500}
                   textAnchor="end"
                   fontSize="16"
                   fill="black"
-                  transform={`rotate(-90, ${500 - (selectedDetails.Width / 2) * 10 - 10}, 500)`}
+                  transform={`rotate(-90, ${
+                    500 -
+                    (orientation === "horizontal"
+                      ? selectedDetails.Width / 2
+                      : selectedDetails.Height / 2) * 10 - 10
+                  }, 500)`}
                 >
-                  {`${selectedDetails.Height} cm`}
+                  {orientation === "horizontal"
+                    ? `${selectedDetails.Height} cm`
+                    : `${selectedDetails.Width} cm`}
                 </text>
-                {/* Small Double-Dashed Square (center-right of LED) */}
-                <rect
-                  x={500 + (selectedDetails.Width / 4) * 10 - 30}
-                  y={500 - 15}
-                  width="45"
-                  height="35" 
-                  fill="none"
-                  stroke="black"
-                  strokeWidth="1"
-                  strokeDasharray="2,2"
-                />
               </>
             )}
 
@@ -195,6 +245,8 @@ const App = () => {
         onSelectionChange={handleSelectionChange}
         description={description}
         onDescriptionChange={handleDescriptionChange}
+        onOrientationChange={setOrientation} // Pass orientation handler
+        onDownload={handleDownload}
       />
     </div>
   );
