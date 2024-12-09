@@ -71,7 +71,12 @@ The **LED Screen Installation Diagram Tool** is a React-based application design
    ```bash
    npm start
    ```
-4. Open the app in your browser at `http://localhost:3000`.
+4. Go to Server repository to start backend:
+   ```bash
+   cd server
+   node server.js
+   ```
+6. Open the app in your browser at `http://localhost:3000`.
 
 ---
 
